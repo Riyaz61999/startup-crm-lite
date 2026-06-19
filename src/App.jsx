@@ -11,7 +11,7 @@ import Sidebar from './components/Sidebar';
 // Import the centralized routing configuration from the routes folder
 import AppRoutes from './routes';
 
-// Define the root App component
+// Define the root App component0
 const App = () => {
   // Render the application tree
   return (
@@ -32,12 +32,12 @@ const App = () => {
         }}
       />
       {/* App container uses flex layout to put the Sidebar side-by-side with the main content */}
-      <div className="flex min-h-screen bg-background text-text-dark font-sans">
+      <div className="flex min-h-screen bg-background text-text-dark font-sans transition-colors duration-200">
         {/* Render the Sidebar component on the left side */}
         <Sidebar />
         
         {/* Main content area dynamically takes up the remaining horizontal space using flex-1 */}
-        <main className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 flex flex-col overflow-hidden pt-14 md:pt-0">
           {/* Internal container to handle scrolling independently if needed */}
           <div className="flex-1 overflow-y-auto">
             {/* Render the dynamically imported routes based on the current URL */}

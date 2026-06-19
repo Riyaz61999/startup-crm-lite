@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Users, DollarSign, TrendingUp, Activity, Calendar } from 'lucide-react';
@@ -8,6 +8,7 @@ import StatsCard from '../components/dashboard/StatsCard';
 import PipelineOverview from '../components/dashboard/PipelineOverview';
 import RecentLeads from '../components/dashboard/RecentLeads';
 import QuickActions from '../components/dashboard/QuickActions';
+import { useLeads } from '../context/LeadContext';
 
 /**
  * Shape of an individual Lead object.
@@ -20,42 +21,16 @@ import QuickActions from '../components/dashboard/QuickActions';
  * @property {string} createdAt - ISO string representation of when the lead was added.
  */
 
-// Seeding standard mock leads data (Phase 8 will swap this for API data)
-const INITIAL_LEADS = [
-  { id: '1', name: 'Alexander Wright', company: 'Apex BioTech', status: 'Won', value: 12000, email: 'alex@apexbiotech.com', phone: '+1 (555) 987-6543', source: 'LinkedIn', createdAt: '2026-06-15T14:30:00Z' },
-  { id: '2', name: 'Sophia Chen', company: 'Nova Robotics', status: 'Proposal Sent', value: 8500, email: 'sophia@novarobotics.com', phone: '+1 (555) 456-7890', source: 'Website', createdAt: '2026-06-14T09:15:00Z' },
-  { id: '3', name: 'Marcus Miller', company: 'Quantum SaaS', status: 'Meeting Scheduled', value: 15000, email: 'marcus@quantumsaas.io', phone: '+1 (555) 234-5678', source: 'Referral', createdAt: '2026-06-12T11:45:00Z' },
-  { id: '4', name: 'Emily Rodriguez', company: 'GreenCycle', status: 'Contacted', value: 3200, email: 'emily@greencycle.org', phone: '+1 (555) 345-6789', source: 'Cold Call', createdAt: '2026-06-15T16:00:00Z' },
-  { id: '5', name: 'David Kim', company: 'Vertex FinTech', status: 'New', value: 5000, email: 'david@vertexfin.com', phone: '+1 (555) 876-5432', source: 'Email Campaign', createdAt: '2026-06-16T08:00:00Z' },
-  { id: '6', name: 'Elena Rostova', company: 'Nordic Logistics', status: 'Meeting Scheduled', value: 18000, email: 'elena@nordiclogistics.ru', phone: '+7 (900) 123-4567', source: 'LinkedIn', createdAt: '2026-06-10T10:30:00Z' },
-  { id: '7', name: 'Jordan Patel', company: 'Skyward AI', status: 'Won', value: 25000, email: 'jordan@skyward.ai', phone: '+1 (555) 789-0123', source: 'Website', createdAt: '2026-06-08T15:20:00Z' },
-  { id: '8', name: 'Clara Oswald', company: 'Chronos Web', status: 'Lost', value: 4500, email: 'clara@chronos.web', phone: '+44 7911 123456', source: 'Other', createdAt: '2026-06-05T13:10:00Z' },
-  { id: '9', name: 'Ryan Vance', company: 'Apex BioTech', status: 'Contacted', value: 6000, email: 'ryan@apexbiotech.com', phone: '+1 (555) 123-9876', source: 'LinkedIn', createdAt: '2026-06-16T09:45:00Z' },
-];
-
 /**
  * Dashboard page component assemblies stats panels, pipeline status bars,
  * recent CRM activities table, and navigation action controllers.
- * Computes pipeline summaries on-the-fly to sustain dynamic mock state.
+ * Computes pipeline summaries on-the-fly from shared LeadContext state.
  *
  * @returns {React.JSX.Element} The rendered dashboard page layout.
  */
 const Dashboard = () => {
   const navigate = useNavigate();
-  
-  // Initialize state from local storage or fallback to seed data
-  const [leads, setLeads] = useState(() => {
-    try {
-      const stored = localStorage.getItem('crm_leads');
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch (e) {
-      console.error('Failed to parse crm_leads in Dashboard', e);
-    }
-    localStorage.setItem('crm_leads', JSON.stringify(INITIAL_LEADS));
-    return INITIAL_LEADS;
-  });
+  const { leads } = useLeads();
 
   // Compute stats metrics dynamically
   const totalLeads = leads.length;
@@ -128,22 +103,22 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 md:p-8 bg-background min-h-screen">
+    <div className="p-4 md:p-6 lg:p-8 bg-background dark:bg-gray-900 min-h-screen transition-colors duration-200">
       {/* Header Container */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-text-dark tracking-tight">
+          <h1 className="text-3xl font-extrabold text-text-dark dark:text-white tracking-tight">
             Dashboard Overview
           </h1>
-          <p className="text-sm text-text-gray mt-1 font-medium">
+          <p className="text-sm text-text-gray dark:text-gray-400 mt-1 font-medium">
             Welcome back! Here's a review of your startup's pipeline activity.
           </p>
         </div>
         
         {/* Date Stamp Tag */}
-        <div className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-100 rounded-xl shadow-xs self-start md:self-auto">
-          <Calendar className="w-4 h-4 text-text-gray" aria-hidden="true" />
-          <span className="text-xs font-semibold text-text-dark">
+        <div className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-xl shadow-xs self-start md:self-auto transition-colors duration-200">
+          <Calendar className="w-4 h-4 text-text-gray dark:text-gray-400" aria-hidden="true" />
+          <span className="text-xs font-semibold text-text-dark dark:text-gray-200">
             {formattedDate}
           </span>
         </div>

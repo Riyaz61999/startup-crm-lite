@@ -64,43 +64,43 @@ const LeadTable = ({ leads = [], onEdit, onDelete }) => {
   };
 
   return (
-    <div className="bg-card border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+    <div className="bg-card dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-100 bg-slate-50/50 text-xs font-semibold text-text-gray uppercase tracking-wider select-none">
+            <tr className="border-b border-slate-100 dark:border-gray-700 bg-slate-50/50 dark:bg-gray-700/50 text-xs font-semibold text-text-gray dark:text-gray-400 uppercase tracking-wider select-none">
               <th className="py-4 px-6">Lead Info</th>
               <th className="py-4 px-4">Company</th>
               <th className="py-4 px-4">Status</th>
-              <th className="py-4 px-4">Email</th>
-              <th className="py-4 px-4">Source</th>
+              <th className="py-4 px-4 hidden lg:table-cell">Email</th>
+              <th className="py-4 px-4 hidden lg:table-cell">Source</th>
               <th className="py-4 px-4">Deal Value</th>
-              <th className="py-4 px-4">Date Added</th>
+              <th className="py-4 px-4 hidden lg:table-cell">Date Added</th>
               <th className="py-4 px-6 text-right">Actions</th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-gray-700">
             {leads.length > 0 ? (
               leads.map((lead) => (
                 <tr 
                   key={lead.id} 
-                  className="group hover:bg-slate-50/50 transition-colors duration-150"
+                  className="group hover:bg-slate-50/50 dark:hover:bg-gray-700/50 transition-colors duration-150"
                 >
                   {/* Lead Info (Name & Monogram Avatar) */}
                   <td className="py-3.5 px-6 flex items-center gap-3">
-                    <div className="w-8.5 h-8.5 rounded-xl bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center border border-slate-200/50 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors duration-300">
+                    <div className="w-8.5 h-8.5 rounded-xl bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-gray-300 font-bold text-xs flex items-center justify-center border border-slate-200/50 dark:border-gray-600 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors duration-300">
                       {getInitials(lead.name)}
                     </div>
                     <div>
-                      <span className="font-semibold text-sm text-text-dark group-hover:text-primary transition-colors duration-150">
+                      <span className="font-semibold text-sm text-text-dark dark:text-white group-hover:text-primary transition-colors duration-150">
                         {lead.name}
                       </span>
                     </div>
                   </td>
 
                   {/* Company */}
-                  <td className="py-3.5 px-4 text-sm text-text-gray font-medium">
+                  <td className="py-3.5 px-4 text-sm text-text-gray dark:text-gray-400 font-medium">
                     {lead.company}
                   </td>
 
@@ -110,7 +110,7 @@ const LeadTable = ({ leads = [], onEdit, onDelete }) => {
                   </td>
 
                   {/* Email */}
-                  <td className="py-3.5 px-4 text-sm text-text-gray">
+                  <td className="py-3.5 px-4 text-sm text-text-gray dark:text-gray-400 hidden lg:table-cell">
                     <a 
                       href={`mailto:${lead.email}`}
                       className="inline-flex items-center gap-1.5 hover:text-primary font-semibold transition-colors"
@@ -122,19 +122,19 @@ const LeadTable = ({ leads = [], onEdit, onDelete }) => {
                   </td>
 
                   {/* Source Badge */}
-                  <td className="py-3.5 px-4">
-                    <span className="inline-flex items-center px-2 py-0.5 bg-slate-50 text-slate-500 border border-slate-100 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                  <td className="py-3.5 px-4 hidden lg:table-cell">
+                    <span className="inline-flex items-center px-2 py-0.5 bg-slate-50 dark:bg-gray-700 text-slate-500 dark:text-gray-400 border border-slate-100 dark:border-gray-600 rounded-md text-[10px] font-bold uppercase tracking-wider">
                       {lead.source}
                     </span>
                   </td>
 
                   {/* Deal Value */}
-                  <td className="py-3.5 px-4 text-sm font-bold text-text-dark">
-                    {lead.value > 0 ? `$${lead.value.toLocaleString()}` : <span className="text-slate-350 font-normal">-</span>}
+                  <td className="py-3.5 px-4 text-sm font-bold text-text-dark dark:text-white">
+                    {lead.value > 0 ? `$${lead.value.toLocaleString()}` : <span className="text-slate-350 dark:text-gray-500 font-normal">-</span>}
                   </td>
 
                   {/* Date Added */}
-                  <td className="py-3.5 px-4 text-xs font-semibold text-text-gray">
+                  <td className="py-3.5 px-4 text-xs font-semibold text-text-gray dark:text-gray-400 hidden lg:table-cell">
                     {formatDate(lead.createdAt)}
                   </td>
 
@@ -143,7 +143,7 @@ const LeadTable = ({ leads = [], onEdit, onDelete }) => {
                     <div className="inline-flex items-center gap-1">
                       <button
                         onClick={() => onEdit(lead)}
-                        className="p-1.5 text-text-gray hover:text-primary hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                        className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text-gray dark:text-gray-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-gray-700 rounded-lg transition-colors cursor-pointer"
                         title="Edit Lead"
                         aria-label={`Edit ${lead.name}`}
                       >
@@ -151,7 +151,7 @@ const LeadTable = ({ leads = [], onEdit, onDelete }) => {
                       </button>
                       <button
                         onClick={() => onDelete(lead.id)}
-                        className="p-1.5 text-text-gray hover:text-danger hover:bg-danger/10 rounded-lg transition-colors cursor-pointer"
+                        className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text-gray dark:text-gray-400 hover:text-danger hover:bg-danger/10 dark:hover:bg-danger/20 rounded-lg transition-colors cursor-pointer"
                         title="Delete Lead"
                         aria-label={`Delete ${lead.name}`}
                       >
@@ -163,7 +163,7 @@ const LeadTable = ({ leads = [], onEdit, onDelete }) => {
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="py-12 text-center text-sm font-semibold text-text-gray">
+                <td colSpan={8} className="py-12 text-center text-sm font-semibold text-text-gray dark:text-gray-400">
                   No matches found for your filter criteria.
                 </td>
               </tr>

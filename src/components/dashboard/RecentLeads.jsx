@@ -19,13 +19,13 @@ import React from 'react';
 
 // Define color styles for different statuses in the table badge
 const STATUS_BADGE_STYLES = {
-  New: 'bg-blue-50 text-blue-700 border-blue-200/60',
-  Contacted: 'bg-warning/10 text-warning border-warning/20',
-  Qualified: 'bg-indigo-50 text-indigo-700 border-indigo-200/60',
-  Proposal: 'bg-purple-50 text-purple-700 border-purple-200/60',
-  Negotiation: 'bg-pink-55 text-pink-700 border-pink-200/60',
-  'Closed Won': 'bg-success/10 text-success border-success/20',
-  'Closed Lost': 'bg-danger/10 text-danger border-danger/20',
+  New: 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200/60 dark:border-blue-800',
+  Contacted: 'bg-warning/10 dark:bg-warning/20 text-warning dark:text-yellow-500 border-warning/20 dark:border-warning/30',
+  Qualified: 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200/60 dark:border-indigo-800',
+  Proposal: 'bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border-purple-200/60 dark:border-purple-800',
+  Negotiation: 'bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200/60 dark:border-pink-800',
+  'Closed Won': 'bg-success/10 dark:bg-success/20 text-success dark:text-green-400 border-success/20 dark:border-success/30',
+  'Closed Lost': 'bg-danger/10 dark:bg-danger/20 text-danger dark:text-red-400 border-danger/20 dark:border-danger/30',
 };
 
 /**
@@ -77,46 +77,46 @@ const RecentLeads = ({ leads = [] }) => {
   };
 
   return (
-    <div className="bg-card border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="bg-card dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-lg font-bold text-text-dark">Recent Leads</h3>
-          <p className="text-xs text-text-gray mt-0.5">Most recently added contacts in your system</p>
+          <h3 className="text-lg font-bold text-text-dark dark:text-white">Recent Leads</h3>
+          <p className="text-xs text-text-gray dark:text-gray-400 mt-0.5">Most recently added contacts in your system</p>
         </div>
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-100 text-xs font-semibold text-text-gray uppercase tracking-wider">
+            <tr className="border-b border-slate-100 dark:border-gray-700 text-xs font-semibold text-text-gray dark:text-gray-400 uppercase tracking-wider">
               <th className="pb-3 pl-1">Lead Info</th>
-              <th className="pb-3">Company</th>
+              <th className="pb-3 hidden md:table-cell">Company</th>
               <th className="pb-3">Status</th>
-              <th className="pb-3 pr-1 text-right">Date Added</th>
+              <th className="pb-3 pr-1 text-right hidden md:table-cell">Date Added</th>
             </tr>
           </thead>
           
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-slate-50 dark:divide-gray-700">
             {recentFiveLeads.length > 0 ? (
               recentFiveLeads.map((lead) => (
                 <tr 
                   key={lead.id} 
-                  className="group hover:bg-slate-50/50 transition-colors duration-150"
+                  className="group hover:bg-slate-50/50 dark:hover:bg-gray-700/50 transition-colors duration-150"
                 >
                   {/* Name and Avatar */}
                   <td className="py-3.5 pl-1 flex items-center gap-3">
-                    <div className="w-8.5 h-8.5 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-600 border border-slate-200/50 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors duration-200">
+                    <div className="w-8.5 h-8.5 rounded-full bg-slate-100 dark:bg-gray-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-gray-300 border border-slate-200/50 dark:border-gray-600 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors duration-200">
                       {getInitials(lead.name)}
                     </div>
                     <div>
-                      <span className="font-semibold text-sm text-text-dark group-hover:text-primary transition-colors duration-150">
+                      <span className="font-semibold text-sm text-text-dark dark:text-white group-hover:text-primary transition-colors duration-150">
                         {lead.name}
                       </span>
                     </div>
                   </td>
 
                   {/* Company */}
-                  <td className="py-3.5 text-sm text-text-gray font-medium">
+                  <td className="py-3.5 text-sm text-text-gray dark:text-gray-400 font-medium hidden md:table-cell">
                     {lead.company}
                   </td>
 
@@ -124,7 +124,7 @@ const RecentLeads = ({ leads = [] }) => {
                   <td className="py-3.5">
                     <span 
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
-                        STATUS_BADGE_STYLES[lead.status] || 'bg-slate-100 text-slate-700 border-slate-200'
+                        STATUS_BADGE_STYLES[lead.status] || 'bg-slate-100 dark:bg-gray-700 text-slate-700 dark:text-gray-300 border-slate-200 dark:border-gray-600'
                       }`}
                     >
                       {lead.status}
@@ -132,14 +132,14 @@ const RecentLeads = ({ leads = [] }) => {
                   </td>
 
                   {/* Date Added */}
-                  <td className="py-3.5 pr-1 text-right text-xs text-text-gray font-semibold">
+                  <td className="py-3.5 pr-1 text-right text-xs text-text-gray dark:text-gray-400 font-semibold hidden md:table-cell">
                     {formatDate(lead.createdAt)}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="py-8 text-center text-sm text-text-gray font-medium">
+                <td colSpan={4} className="py-8 text-center text-sm text-text-gray dark:text-gray-400 font-medium">
                   No recent leads found
                 </td>
               </tr>

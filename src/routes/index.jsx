@@ -14,7 +14,7 @@ const NotFound = lazy(() => import('../pages/NotFound'));
 const AppRoutes = () => {
   return (
     // Wrap routes in Suspense to provide a fallback UI (e.g., a loading spinner) while lazy components are fetched
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-xl">Loading page...</div>}>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-xl text-gray-600 dark:text-gray-300">Loading page...</div>}>
       {/* Routes container that matches the current URL to the correct Route */}
       <Routes>
         {/* Define the root route mapping to the Dashboard component */}

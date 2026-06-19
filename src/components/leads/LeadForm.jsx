@@ -152,10 +152,10 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       <div>
-        <h2 className="text-xl font-bold text-text-dark mb-1">
+        <h2 className="text-xl font-bold text-text-dark dark:text-white mb-1">
           {isEditMode ? 'Edit Lead Details' : 'Add New Prospect'}
         </h2>
-        <p className="text-xs text-text-gray mb-4">
+        <p className="text-xs text-text-gray dark:text-gray-400 mb-4">
           {isEditMode ? 'Modify properties of the selected contact.' : 'Enter information to register a new CRM lead.'}
         </p>
       </div>
@@ -163,7 +163,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Name Input */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="name" className="text-xs font-bold text-text-dark uppercase tracking-wider flex items-center">
+          <label htmlFor="name" className="text-xs font-bold text-text-dark dark:text-white uppercase tracking-wider flex items-center">
             Contact Name <span className="text-danger ml-0.5" aria-hidden="true">*</span>
           </label>
           <input
@@ -174,10 +174,10 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="e.g. John Doe"
-            className={`w-full px-3.5 py-2.5 bg-white border rounded-xl text-sm font-medium focus:outline-none focus:ring-2 transition-all duration-200 ${
+            className={`w-full px-3.5 py-2.5 bg-white dark:bg-gray-700 border rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:bg-white dark:focus:bg-gray-800 transition-all duration-200 ${
               errors.name 
                 ? 'border-danger focus:border-danger focus:ring-danger/20' 
-                : 'border-slate-200 focus:border-primary focus:ring-primary/20'
+                : 'border-slate-200 dark:border-gray-600 focus:border-primary focus:ring-primary/20'
             }`}
             aria-required="true"
             aria-invalid={!!errors.name}
@@ -192,7 +192,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
 
         {/* Company Input */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="company" className="text-xs font-bold text-text-dark uppercase tracking-wider flex items-center">
+          <label htmlFor="company" className="text-xs font-bold text-text-dark dark:text-white uppercase tracking-wider flex items-center">
             Company <span className="text-danger ml-0.5" aria-hidden="true">*</span>
           </label>
           <input
@@ -203,10 +203,10 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="e.g. Stripe Inc."
-            className={`w-full px-3.5 py-2.5 bg-white border rounded-xl text-sm font-medium focus:outline-none focus:ring-2 transition-all duration-200 ${
+            className={`w-full px-3.5 py-2.5 bg-white dark:bg-gray-700 border rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:bg-white dark:focus:bg-gray-800 transition-all duration-200 ${
               errors.company 
                 ? 'border-danger focus:border-danger focus:ring-danger/20' 
-                : 'border-slate-200 focus:border-primary focus:ring-primary/20'
+                : 'border-slate-200 dark:border-gray-600 focus:border-primary focus:ring-primary/20'
             }`}
             aria-required="true"
             aria-invalid={!!errors.company}
@@ -221,7 +221,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
 
         {/* Email Input */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="email" className="text-xs font-bold text-text-dark uppercase tracking-wider flex items-center">
+          <label htmlFor="email" className="text-xs font-bold text-text-dark dark:text-white uppercase tracking-wider flex items-center">
             Email Address <span className="text-danger ml-0.5" aria-hidden="true">*</span>
           </label>
           <input
@@ -232,10 +232,10 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="e.g. contact@stripe.com"
-            className={`w-full px-3.5 py-2.5 bg-white border rounded-xl text-sm font-medium focus:outline-none focus:ring-2 transition-all duration-200 ${
+            className={`w-full px-3.5 py-2.5 bg-white dark:bg-gray-700 border rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:bg-white dark:focus:bg-gray-800 transition-all duration-200 ${
               errors.email 
                 ? 'border-danger focus:border-danger focus:ring-danger/20' 
-                : 'border-slate-200 focus:border-primary focus:ring-primary/20'
+                : 'border-slate-200 dark:border-gray-600 focus:border-primary focus:ring-primary/20'
             }`}
             aria-required="true"
             aria-invalid={!!errors.email}
@@ -250,7 +250,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
 
         {/* Phone Input */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="phone" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+          <label htmlFor="phone" className="text-xs font-bold text-text-dark dark:text-white uppercase tracking-wider">
             Phone Number
           </label>
           <input
@@ -260,13 +260,13 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
             value={formData.phone}
             onChange={handleChange}
             placeholder="e.g. +1 (555) 123-4567"
-            className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+            className="w-full px-3.5 py-2.5 bg-white dark:bg-gray-700 border border-slate-200 dark:border-gray-600 rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:bg-white dark:focus:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
           />
         </div>
 
         {/* Status Dropdown */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="status" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+          <label htmlFor="status" className="text-xs font-bold text-text-dark dark:text-white uppercase tracking-wider">
             Status Stage
           </label>
           <div className="relative">
@@ -275,7 +275,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
               name="status"
               value={formData.status}
               onChange={handleChange}
-              className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 appearance-none cursor-pointer"
+              className="w-full px-3.5 py-2.5 bg-white dark:bg-gray-700 border border-slate-200 dark:border-gray-600 rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:bg-white dark:focus:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 appearance-none cursor-pointer"
             >
               {STATUS_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -283,7 +283,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-gray">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-gray dark:text-gray-400">
               <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
               </svg>
@@ -293,7 +293,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
 
         {/* Source Dropdown */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="source" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+          <label htmlFor="source" className="text-xs font-bold text-text-dark dark:text-white uppercase tracking-wider">
             Lead Source
           </label>
           <div className="relative">
@@ -302,7 +302,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
               name="source"
               value={formData.source}
               onChange={handleChange}
-              className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 appearance-none cursor-pointer"
+              className="w-full px-3.5 py-2.5 bg-white dark:bg-gray-700 border border-slate-200 dark:border-gray-600 rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:bg-white dark:focus:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 appearance-none cursor-pointer"
             >
               {SOURCE_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -310,7 +310,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-gray">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-gray dark:text-gray-400">
               <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
               </svg>
@@ -320,7 +320,7 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
 
         {/* Deal Value Input */}
         <div className="flex flex-col gap-1.5 md:col-span-2">
-          <label htmlFor="value" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+          <label htmlFor="value" className="text-xs font-bold text-text-dark dark:text-white uppercase tracking-wider">
             Deal Size (Est. Value USD)
           </label>
           <input
@@ -331,17 +331,17 @@ const LeadForm = ({ initialData, onSubmit, onCancel }) => {
             onChange={handleChange}
             placeholder="e.g. 5000"
             min="0"
-            className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+            className="w-full px-3.5 py-2.5 bg-white dark:bg-gray-700 border border-slate-200 dark:border-gray-600 rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:bg-white dark:focus:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
           />
         </div>
       </div>
 
       {/* Button controls container */}
-      <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+      <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-gray-700">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2.5 text-sm font-bold text-text-gray hover:bg-slate-50 border border-slate-200 hover:border-slate-350 rounded-xl transition-all duration-200 cursor-pointer"
+          className="px-4 py-2.5 text-sm font-bold text-text-gray dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600 hover:border-slate-350 dark:hover:border-gray-500 rounded-xl transition-all duration-200 cursor-pointer"
         >
           Cancel
         </button>
