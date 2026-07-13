@@ -56,9 +56,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (name, email, password) => {
+  const register = async ({ username, mobileNumber, email, password }) => {
     try {
-      const data = await authService.register(name, email, password);
+      const data = await authService.register({ username, mobileNumber, email, password });
       if (data.success) {
         const { token: newToken, user: userData } = data.data;
         localStorage.setItem('crm-token', newToken);
