@@ -69,8 +69,9 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: false };
     } catch (error) {
-      const msg = error.response?.data?.message || 
-                  error.response?.data?.errors?.map(e => e.msg).join(', ') || 
+      const errData = error.response?.data;
+      const msg = errData?.message || 
+                  errData?.errors?.map(e => e.message || e.msg).join(', ') || 
                   'An error occurred during registration';
       toast.error(msg);
       return { success: false, message: msg };
