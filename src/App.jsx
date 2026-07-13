@@ -48,8 +48,8 @@ const AppContent = () => {
 // Define the root App component
 const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Toaster 
           position="top-right"
           toastOptions={{
@@ -64,8 +64,8 @@ const App = () => {
           }}
         />
         <AppContent />
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 
