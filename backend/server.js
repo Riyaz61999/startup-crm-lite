@@ -58,16 +58,18 @@ app.use(
   })
 );
 
-// 4. Rate Limiting configurations
+// 4. Rate Limiting configurations (relaxed in dev, strict in production)
+const isDev = NODE_ENV === 'development';
+
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: isDev ? 1000 : 100, // Relaxed in dev
   message: 'Too many requests, please try again later.'
 });
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Limit each IP to 10 requests per windowMs
+  max: isDev ? 100 : 10, // Relaxed in dev
   message: 'Too many auth attempts.'
 });
 
