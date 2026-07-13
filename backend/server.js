@@ -51,17 +51,9 @@ if (NODE_ENV === 'production') {
 }
 
 // 3. Enable CORS with configurable origin and support for credentials
-const allowedOrigins = [process.env.FRONTEND_URL, 'https://your-app.vercel.app'];
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: true, // Allow all origins for now to prevent Vercel dynamic URL issues
     credentials: true
   })
 );
