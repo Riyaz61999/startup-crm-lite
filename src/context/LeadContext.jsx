@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useCallback, useState } from 'react';
+import React, { createContext, useContext, useCallback, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import leadService from '../services/leadService';
 
@@ -23,6 +23,13 @@ export const LeadProvider = ({ children }) => {
       setIsLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem('crm-token');
+    if (token) {
+      fetchLeads();
+    }
+  }, [fetchLeads]);
 
   const addLead = useCallback(async (leadData) => {
     try {

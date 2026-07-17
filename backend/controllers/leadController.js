@@ -52,7 +52,8 @@ export const getLeads = async (req, res) => {
     const pages = Math.ceil(total / parsedLimit);
 
     res.json({
-      leads,
+      success: true,
+      data: leads,
       pagination: {
         total,
         page: parseInt(page),
@@ -64,6 +65,112 @@ export const getLeads = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching leads', error: error.message });
+  }
+};
+
+/**
+ * Create a new lead.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export const createLead = async (req, res) => {
+  try {
+    const { name, company, email, phone, status, source, notes, value } = req.body;
+
+    const lead = new Lead({
+      name,
+      company,
+      email,
+      phone,
+      status,
+      source,
+      notes,
+      value,
+      owner: req.user._id
+    });
+
+    await lead.save();
+
+    res.status(201).json({ success: true, data: lead });
+  } catch (error) {
+    res.status(400).json({ success: false, message: 'Error creating lead', error: error.message });
+  }
+};
+
+/**
+ * Update a lead by ID.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export const updateLead = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    const lead = await Lead.findOneAndUpdate(
+      { _id: id, owner: req.user._id },
+      updates,
+      { new: true, runValidators: true }
+    );
+
+    if (!lead) {
+      return res.status(404).json({ success: false, message: 'Lead not found' });
+    }
+
+    res.json({ success: true, data: lead });
+  } catch (error) {
+    res.status(400).json({ success: false, message: 'Error updating lead', error: error.message });
+  }
+};
+
+/**
+ * Update only the status of a lead.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export const updateLeadStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ success: false, message: 'Status is required' });
+    }
+
+    const lead = await Lead.findOneAndUpdate(
+      { _id: id, owner: req.user._id },
+      { status },
+      { new: true, runValidators: true }
+    );
+
+    if (!lead) {
+      return res.status(404).json({ success: false, message: 'Lead not found' });
+    }
+
+    res.json({ success: true, data: lead });
+  } catch (error) {
+    res.status(400).json({ success: false, message: 'Error updating lead status', error: error.message });
+  }
+};
+
+/**
+ * Delete a lead by ID.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export const deleteLead = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const lead = await Lead.findOneAndDelete({ _id: id, owner: req.user._id });
+
+    if (!lead) {
+      return res.status(404).json({ success: false, message: 'Lead not found' });
+    }
+
+    res.json({ success: true, message: 'Lead deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error deleting lead', error: error.message });
   }
 };
 

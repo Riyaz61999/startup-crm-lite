@@ -99,6 +99,15 @@ export const leadSchema = new Schema(
     },
 
     /**
+     * Estimated deal size/value in USD.
+     * @type {Number}
+     */
+    value: {
+      type: Number,
+      default: 0
+    },
+
+    /**
      * The owner (User) who created or is assigned to this lead.
      * Required field linking to the User model.
      * @type {mongoose.Types.ObjectId}
