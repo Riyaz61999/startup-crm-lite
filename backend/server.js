@@ -7,8 +7,14 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import mongoose from 'mongoose';
 
-// Load environment variables early
-dotenv.config();
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables early explicitly from backend directory
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 // Import local configurations and utilities
 import { connectDB } from './config/database.js';

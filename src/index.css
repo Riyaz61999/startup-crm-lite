@@ -4,22 +4,41 @@
 
 @theme {
     --font-playwrite: "Playwrite AU VIC Guides", cursive;
-    --color-primary: #2563EB;
+    
+    /* Brand Colors (Light Mode) */
+    --color-primary: #6B46C1;
+    --color-secondary: #9272D4;
+    --color-accent: #FF8AAE;
+    
+    /* Semantic Colors */
     --color-success: #22C55E;
     --color-warning: #F59E0B;
     --color-danger: #EF4444;
+    --color-info: #3B82F6;
 
-    --color-background: #F8FAFC;
-    --color-card: #FFFFFF;
+    /* Backgrounds & Surfaces (Light Mode) */
+    --color-background: #FAF7FD;
+    --color-card: #F0EAF8;
+    --color-border: #DDD3ED;
 
-    --color-text-dark: #0F172A;
-    --color-text-gray: #64748B;
+    /* Text Colors (Light Mode) */
+    --color-text-dark: #241A38;
+    --color-text-gray: #7D6B9E;
 }
 
 /* Dark mode overrides for custom theme tokens */
 .dark {
-    --color-background: #111827;
-    --color-card: #1F2937;
-    --color-text-dark: #F9FAFB;
-    --color-text-gray: #9CA3AF;
+    /* Brand Colors (Dark Mode) */
+    --color-primary: #A885FF;
+    --color-secondary: #C4ABFF;
+    --color-accent: #FFA6C2;
+    
+    /* Backgrounds & Surfaces (Dark Mode) */
+    --color-background: #171122;
+    --color-card: #241B35;
+    --color-border: #3C3154;
+    
+    /* Text Colors (Dark Mode) */
+    --color-text-dark: #F8F6FC;
+    --color-text-gray: #A294B8;
 }
