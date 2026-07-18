@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: false };
     } catch (error) {
-      const msg = error.response?.data?.message || 'An error occurred during login';
+      const msg = error.response?.data?.message || error.message || 'An error occurred during login';
       toast.error(msg);
       return { success: false, message: msg };
     }
@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }) => {
       const errData = error.response?.data;
       const msg = errData?.message || 
                   errData?.errors?.map(e => e.message || e.msg).join(', ') || 
+                  error.message ||
                   'An error occurred during registration';
       toast.error(msg);
       return { success: false, message: msg };
