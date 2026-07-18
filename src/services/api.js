@@ -29,17 +29,17 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
-      // Network error
-      // Check if we are trying to hit localhost from a deployed site
+      // Network error or request interceptor rejection
+      const requestUrl = error.config?.baseURL || error.config?.url || '';
       if (
         window.location.hostname !== 'localhost' &&
-        error.config.url.includes('localhost')
+        requestUrl.includes('localhost')
       ) {
         toast.error(
           'Backend is not configured! Please set VITE_API_URL in Vercel to your deployed backend URL.',
           { duration: 10000 }
         );
-      } else {
+      } else if (error.message && !error.message.includes('Backend is not configured')) {
         toast.error('Cannot connect to server. Check your connection.');
       }
     } else if (error.response.status === 401) {
