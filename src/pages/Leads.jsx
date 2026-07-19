@@ -107,13 +107,13 @@ const Leads = () => {
   const hasActiveFilters = searchQuery !== '' || activeFilter !== 'All';
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 bg-background dark:bg-gray-900 min-h-screen transition-colors duration-200">
+    <div className="p-4 md:p-6 lg:p-8 bg-background min-h-screen transition-colors duration-200">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-text-dark dark:text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-text-dark tracking-tight">
             Lead Management
           </h1>
-          <p className="text-sm text-text-gray dark:text-gray-400 mt-1 font-medium">
+          <p className="text-sm text-text-gray mt-1 font-medium">
             Acquire, track, and close prospects in your startup pipeline.
           </p>
         </div>
@@ -128,7 +128,7 @@ const Leads = () => {
         </button>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-2xl p-4 shadow-xs flex flex-col gap-4 mb-4 transition-colors duration-200">
+      <div className="bg-card border border-border rounded-2xl p-4 shadow-xs flex flex-col gap-4 mb-4 transition-colors duration-200">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
@@ -201,12 +201,12 @@ const Leads = () => {
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/50 dark:bg-slate-900/80 backdrop-blur-xs flex items-center justify-center md:p-4 z-50 animate-fade-in"
+          className="fixed inset-0 bg-background/80 backdrop-blur-xs flex items-center justify-center md:p-4 z-50 animate-fade-in"
           role="dialog"
           aria-modal="true"
         >
           <div
-            className="bg-white dark:bg-gray-800 md:border md:border-slate-100 dark:border-gray-700 md:rounded-2xl p-6 shadow-xl w-full h-full md:h-auto md:max-w-lg lg:max-w-2xl md:max-h-[90vh] overflow-y-auto transform scale-100 transition-all duration-300 relative animate-in zoom-in-95 rounded-none"
+            className="bg-card md:border md:border-border md:rounded-2xl p-6 shadow-xl w-full h-full md:h-auto md:max-w-lg lg:max-w-2xl md:max-h-[90vh] overflow-y-auto transform scale-100 transition-all duration-300 relative animate-in zoom-in-95 rounded-none"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -214,7 +214,7 @@ const Leads = () => {
                 setIsModalOpen(false);
                 setSelectedLead(null);
               }}
-              className="absolute right-4 top-4 text-text-gray dark:text-gray-400 hover:text-text-dark dark:hover:text-white hover:bg-slate-100 dark:hover:bg-gray-700 p-1.5 rounded-lg transition-colors cursor-pointer"
+              className="absolute right-4 top-4 text-text-gray hover:text-text-dark hover:bg-background p-1.5 rounded-lg transition-colors cursor-pointer"
               aria-label="Close modal dialog"
             >
               <X className="w-4 h-4" />

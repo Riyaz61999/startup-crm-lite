@@ -13,43 +13,43 @@ const ForecastCard = memo(({ forecast }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Revenue Forecast</h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">Based on 6-month trailing average</p>
+            <h3 className="text-base font-bold text-text-dark">Revenue Forecast</h3>
+            <p className="text-sm text-text-gray mt-0.5">Based on 6-month trailing average</p>
           </div>
-          <div className="p-2 rounded-lg bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400">
+          <div className="p-2 rounded-lg bg-primary/10 text-primary">
             <Target className="w-4 h-4" />
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-gray-400 mb-1">
+        <p className="text-xs font-semibold uppercase tracking-wide text-text-gray mb-1">
           Predicted Revenue Next Month
         </p>
-        <p className="text-3xl font-extrabold text-slate-900 dark:text-white">{formatCurrency(predicted)}</p>
+        <p className="text-3xl font-extrabold text-text-dark">{formatCurrency(predicted)}</p>
 
         <div className="mt-6 space-y-4">
           <div>
             <div className="flex items-center justify-between text-xs mb-1.5">
-              <span className="font-medium text-slate-600 dark:text-gray-400">Confidence Score</span>
-              <span className="font-bold text-slate-900 dark:text-white">{confidence}%</span>
+              <span className="font-medium text-text-gray">Confidence Score</span>
+              <span className="font-bold text-text-dark">{confidence}%</span>
             </div>
-            <div className="h-2 rounded-full bg-slate-100 dark:bg-gray-700 overflow-hidden">
+            <div className="h-2 rounded-full bg-background overflow-hidden">
               <div
-                className="h-full rounded-full bg-violet-500 transition-all duration-700"
+                className="h-full rounded-full bg-primary transition-all duration-700"
                 style={{ width: `${confidence}%` }}
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-between rounded-xl bg-slate-50 dark:bg-gray-700/50 px-4 py-3">
-            <span className="text-sm font-medium text-slate-600 dark:text-gray-400">Growth Trend</span>
+          <div className="flex items-center justify-between rounded-xl bg-background px-4 py-3">
+            <span className="text-sm font-medium text-text-gray">Growth Trend</span>
             <div
               className={`flex items-center gap-1 text-sm font-bold ${
                 isPositive
                   ? 'text-emerald-600 dark:text-emerald-400'
                   : isNegative
                     ? 'text-red-600 dark:text-red-400'
-                    : 'text-slate-500 dark:text-gray-400'
+                    : 'text-text-gray'
               }`}
             >
               {isPositive && <ArrowUpRight className="w-4 h-4" />}

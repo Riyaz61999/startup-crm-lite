@@ -18,7 +18,7 @@ const AnalyticsFilters = memo(({ dateRange, customRange, onDateRangeChange, onCu
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2 flex-wrap">
-        <Calendar className="w-4 h-4 text-slate-400 dark:text-gray-500 hidden sm:block" aria-hidden="true" />
+        <Calendar className="w-4 h-4 text-text-gray hidden sm:block" aria-hidden="true" />
         {FILTER_OPTIONS.map((opt) => (
           <button
             key={opt.value}
@@ -26,8 +26,8 @@ const AnalyticsFilters = memo(({ dateRange, customRange, onDateRangeChange, onCu
             onClick={() => onDateRangeChange(opt.value)}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
               dateRange === opt.value
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'bg-white dark:bg-gray-800 text-slate-600 dark:text-gray-300 border border-slate-200 dark:border-gray-600 hover:bg-slate-50 dark:hover:bg-gray-700 hover:border-slate-300 dark:hover:border-gray-500'
+                ? 'bg-primary text-white shadow-sm'
+                : 'bg-card text-text-gray border border-border hover:bg-background hover:border-primary/30 hover:text-text-dark'
             }`}
           >
             {opt.label}
@@ -37,7 +37,7 @@ const AnalyticsFilters = memo(({ dateRange, customRange, onDateRangeChange, onCu
 
       {showCustom && (
         <div className="flex items-center gap-3 flex-wrap">
-          <label className="flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-gray-300">
+          <label className="flex items-center gap-2 text-xs font-medium text-text-gray">
             From
             <input
               type="date"
@@ -45,10 +45,10 @@ const AnalyticsFilters = memo(({ dateRange, customRange, onDateRangeChange, onCu
               onChange={(e) =>
                 onCustomRangeChange({ ...customRange, start: e.target.value })
               }
-              className="px-3 py-1.5 bg-white dark:bg-gray-700 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400"
+              className="px-3 py-1.5 bg-card rounded-lg border border-border text-sm text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
             />
           </label>
-          <label className="flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-gray-300">
+          <label className="flex items-center gap-2 text-xs font-medium text-text-gray">
             To
             <input
               type="date"
@@ -56,7 +56,7 @@ const AnalyticsFilters = memo(({ dateRange, customRange, onDateRangeChange, onCu
               onChange={(e) =>
                 onCustomRangeChange({ ...customRange, end: e.target.value })
               }
-              className="px-3 py-1.5 bg-white dark:bg-gray-700 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400"
+              className="px-3 py-1.5 bg-card rounded-lg border border-border text-sm text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
             />
           </label>
         </div>

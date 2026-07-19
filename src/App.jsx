@@ -18,8 +18,8 @@ const AppContent = () => {
   
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-background transition-colors duration-200">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -55,8 +55,8 @@ const App = () => {
           toastOptions={{
             duration: 3000,
             style: {
-              background: '#0F172A',
-              color: '#FFFFFF',
+              background: '#0F1813',
+              color: '#EEF8F0',
               borderRadius: '0.75rem',
               padding: '1rem',
               boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',

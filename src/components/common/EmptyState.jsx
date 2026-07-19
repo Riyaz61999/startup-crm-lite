@@ -12,12 +12,12 @@ import { SearchX, UserPlus } from 'lucide-react';
 const EmptyState = ({ hasFilters, onClearFilters }) => {
   if (hasFilters) {
     return (
-      <div className="bg-card dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-2xl p-12 text-center shadow-xs">
-        <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-gray-700 flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-gray-600">
-          <SearchX className="w-5 h-5 text-slate-400 dark:text-gray-400" aria-hidden="true" />
+      <div className="bg-card border border-border rounded-2xl p-12 text-center shadow-xs">
+        <div className="w-12 h-12 rounded-full bg-background flex items-center justify-center mx-auto mb-4 border border-border">
+          <SearchX className="w-5 h-5 text-text-gray" aria-hidden="true" />
         </div>
-        <h3 className="text-sm font-bold text-text-dark dark:text-white">No leads found</h3>
-        <p className="text-xs text-text-gray dark:text-gray-400 mt-1 max-w-sm mx-auto">
+        <h3 className="text-sm font-bold text-text-dark">No leads found</h3>
+        <p className="text-xs text-text-gray mt-1 max-w-sm mx-auto">
           No leads match your current search or filter. Try adjusting your criteria or clear filters to see all leads.
         </p>
         {onClearFilters && (
@@ -34,12 +34,12 @@ const EmptyState = ({ hasFilters, onClearFilters }) => {
   }
 
   return (
-    <div className="bg-card dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-2xl p-12 text-center shadow-xs">
-      <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-gray-700 flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-gray-600">
-        <UserPlus className="w-5 h-5 text-slate-400 dark:text-gray-400" aria-hidden="true" />
+    <div className="bg-card border border-border rounded-2xl p-12 text-center shadow-xs">
+      <div className="w-12 h-12 rounded-full bg-background flex items-center justify-center mx-auto mb-4 border border-border">
+        <UserPlus className="w-5 h-5 text-text-gray" aria-hidden="true" />
       </div>
-      <h3 className="text-sm font-bold text-text-dark dark:text-white">No leads yet</h3>
-      <p className="text-xs text-text-gray dark:text-gray-400 mt-1 max-w-sm mx-auto">
+      <h3 className="text-sm font-bold text-text-dark">No leads yet</h3>
+      <p className="text-xs text-text-gray mt-1 max-w-sm mx-auto">
         Your pipeline is empty. Add your first lead to start tracking prospects and closing deals.
       </p>
     </div>

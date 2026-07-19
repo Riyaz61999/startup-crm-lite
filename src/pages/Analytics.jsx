@@ -51,20 +51,20 @@ const Analytics = () => {
 
   if (isEmpty) {
     return (
-      <div className="p-4 md:p-6 lg:p-8 bg-background dark:bg-gray-900 min-h-screen transition-colors duration-200">
+      <div className="p-4 md:p-6 lg:p-8 bg-background min-h-screen transition-colors duration-200">
         <EmptyAnalyticsState />
       </div>
     );
   }
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 bg-background dark:bg-gray-900 min-h-screen transition-colors duration-200">
+    <div className="p-4 md:p-6 lg:p-8 bg-background min-h-screen transition-colors duration-200">
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-text-dark tracking-tight">
             Analytics Dashboard
           </h1>
-          <p className="text-sm text-slate-600 dark:text-gray-400 mt-1 font-medium">
+          <p className="text-sm text-text-gray mt-1 font-medium">
             Track sales performance and growth trends.
           </p>
         </div>

@@ -47,22 +47,22 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="bg-card dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-2xl p-5 shadow-xs hover:shadow-md hover:border-slate-200 dark:hover:border-gray-600 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between gap-4 h-full relative group">
+    <div className="bg-card border border-border rounded-2xl p-5 shadow-xs hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between gap-4 h-full relative group">
       
       {/* Top Header Section */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           {/* Avatar Monogram */}
-          <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-gray-300 font-bold text-sm flex items-center justify-center border border-slate-200/50 dark:border-gray-600 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors duration-300">
+          <div className="w-10 h-10 rounded-xl bg-background text-text-gray font-bold text-sm flex items-center justify-center border border-border group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors duration-300">
             {getInitials(lead.name)}
           </div>
           
           {/* Name & Company */}
           <div className="min-w-0">
-            <h4 className="font-bold text-base text-text-dark dark:text-white truncate group-hover:text-primary transition-colors duration-150">
+            <h4 className="font-bold text-base text-text-dark truncate group-hover:text-primary transition-colors duration-150">
               {lead.name}
             </h4>
-            <p className="text-xs text-text-gray dark:text-gray-400 font-medium truncate">
+            <p className="text-xs text-text-gray font-medium truncate">
               {lead.company}
             </p>
           </div>
@@ -72,7 +72,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
         <div className="flex items-center gap-0.5 opacity-90 lg:opacity-0 group-hover:opacity-100 transition-opacity duration-200 self-start">
           <button
             onClick={() => onEdit(lead)}
-            className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text-gray dark:text-gray-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-gray-700 rounded-lg transition-colors cursor-pointer"
+            className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text-gray hover:text-primary hover:bg-primary/10 rounded-lg transition-colors cursor-pointer"
             title="Edit Lead"
             aria-label={`Edit ${lead.name}`}
           >
@@ -80,7 +80,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
           </button>
           <button
             onClick={() => onDelete(lead.id)}
-            className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text-gray dark:text-gray-400 hover:text-danger hover:bg-danger/10 dark:hover:bg-danger/20 rounded-lg transition-colors cursor-pointer"
+            className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-text-gray hover:text-danger hover:bg-danger/10 dark:hover:bg-danger/20 rounded-lg transition-colors cursor-pointer"
             title="Delete Lead"
             aria-label={`Delete ${lead.name}`}
           >
@@ -92,7 +92,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
       {/* Middle Tags Section */}
       <div className="flex flex-wrap items-center gap-2">
         <StatusBadge status={lead.status} />
-        <span className="inline-flex items-center px-2 py-0.5 bg-slate-50 dark:bg-gray-700 text-slate-500 dark:text-gray-400 border border-slate-100 dark:border-gray-600 rounded-md text-[10px] font-bold uppercase tracking-wider">
+        <span className="inline-flex items-center px-2 py-0.5 bg-background text-text-gray border border-border rounded-md text-[10px] font-bold uppercase tracking-wider">
           {lead.source}
         </span>
         {lead.value > 0 && (
@@ -103,7 +103,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
       </div>
 
       {/* Bottom Details Section */}
-      <div className="space-y-2 pt-3 border-t border-slate-100 dark:border-gray-700 text-xs font-semibold text-text-gray dark:text-gray-400">
+      <div className="space-y-2 pt-3 border-t border-border text-xs font-semibold text-text-gray">
         {/* Email */}
         <a
           href={`mailto:${lead.email}`}
@@ -125,7 +125,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
             <span className="truncate">{lead.phone}</span>
           </a>
         ) : (
-          <div className="flex items-center gap-2 text-slate-350 dark:text-gray-500">
+          <div className="flex items-center gap-2 text-text-gray/50">
             <Phone className="w-3.5 h-3.5 flex-shrink-0" />
             <span>No phone provided</span>
           </div>

@@ -57,10 +57,10 @@ const FunnelChartCard = memo(({ data }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Sales Funnel</h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">Stage conversion and drop-off rates</p>
+            <h3 className="text-base font-bold text-text-dark">Sales Funnel</h3>
+            <p className="text-sm text-text-gray mt-0.5">Stage conversion and drop-off rates</p>
           </div>
-          <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
+          <div className="p-2 rounded-lg bg-secondary/10 text-secondary">
             <Filter className="w-4 h-4" />
           </div>
         </div>

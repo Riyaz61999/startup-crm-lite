@@ -29,10 +29,10 @@ const BarChartCard = memo(({ data }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Monthly Leads Trend</h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">Lead volume over the last 6 months</p>
+            <h3 className="text-base font-bold text-text-dark">Monthly Leads Trend</h3>
+            <p className="text-sm text-text-gray mt-0.5">Lead volume over the last 6 months</p>
           </div>
-          <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+          <div className="p-2 rounded-lg bg-primary/10 text-primary">
             <BarChart3 className="w-4 h-4" />
           </div>
         </div>
@@ -45,30 +45,30 @@ const BarChartCard = memo(({ data }) => {
         ) : (
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={data} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#D4E3D5" vertical={false} />
               <XAxis
                 dataKey="month"
-                tick={{ fill: '#64748B', fontSize: 12 }}
+                tick={{ fill: '#5C7A63', fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: '#64748B', fontSize: 12 }}
+                tick={{ fill: '#5C7A63', fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 label={{
                   value: 'Lead Count',
                   angle: -90,
                   position: 'insideLeft',
-                  fill: '#94A3B8',
+                  fill: '#5C7A63',
                   fontSize: 11,
                   dx: 10,
                 }}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(37, 99, 235, 0.08)' }} />
+              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(47, 106, 70, 0.08)' }} />
               <Bar
                 dataKey="count"
-                fill="#2563EB"
+                fill="#2F6A46"
                 radius={[6, 6, 0, 0]}
                 animationDuration={800}
                 maxBarSize={48}

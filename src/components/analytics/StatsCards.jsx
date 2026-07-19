@@ -26,7 +26,7 @@ const TrendBadge = memo(({ change, invert = false }) => {
           ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400'
           : isNegative
             ? 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400'
-            : 'bg-slate-100 dark:bg-gray-700 text-slate-500 dark:text-gray-400'
+            : 'bg-background text-text-gray'
       }`}
     >
       {isPositive && <ArrowUpRight className="w-3.5 h-3.5" />}
@@ -42,9 +42,9 @@ const KpiCard = memo(({ title, value, icon: Icon, change, colorKey, invertTrend 
   const theme = KPI_COLORS[colorKey] || KPI_COLORS.primary;
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300 p-6">
+    <div className="rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-all duration-300 p-6">
       <div className="flex items-center justify-between mb-4">
-        <span className="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-gray-400">
+        <span className="text-xs font-semibold uppercase tracking-wide text-text-gray">
           {title}
         </span>
         <div className={`p-2.5 rounded-xl ${theme.icon} ${theme.darkIcon || ''} ${theme.text} ${theme.darkText || ''}`}>
@@ -52,12 +52,12 @@ const KpiCard = memo(({ title, value, icon: Icon, change, colorKey, invertTrend 
         </div>
       </div>
       <div className="flex items-baseline justify-between gap-2">
-        <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        <h3 className="text-2xl sm:text-3xl font-extrabold text-text-dark tracking-tight">
           {value}
         </h3>
         <TrendBadge change={change} invert={invertTrend} />
       </div>
-      <p className="text-xs text-slate-500 dark:text-gray-400 mt-2">vs. previous period</p>
+      <p className="text-xs text-text-gray mt-2">vs. previous period</p>
     </div>
   );
 });

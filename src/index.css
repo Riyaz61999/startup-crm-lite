@@ -5,40 +5,40 @@
 @theme {
     --font-playwrite: "Playwrite AU VIC Guides", cursive;
     
-    /* Brand Colors (Light Mode) */
-    --color-primary: #6B46C1;
-    --color-secondary: #9272D4;
-    --color-accent: #FF8AAE;
+    /* Brand Colors (Light Mode) — Forest Growth */
+    --color-primary: #2F6A46;
+    --color-secondary: #58A06D;
+    --color-accent: #D69C52;
     
     /* Semantic Colors */
     --color-success: #22C55E;
-    --color-warning: #F59E0B;
-    --color-danger: #EF4444;
-    --color-info: #3B82F6;
+    --color-warning: #D69C52;
+    --color-danger: #DC3545;
+    --color-info: #58A06D;
 
     /* Backgrounds & Surfaces (Light Mode) */
-    --color-background: #FAF7FD;
-    --color-card: #F0EAF8;
-    --color-border: #DDD3ED;
+    --color-background: #F8FBF7;
+    --color-card: #EDF5EC;
+    --color-border: #D4E3D5;
 
     /* Text Colors (Light Mode) */
-    --color-text-dark: #241A38;
-    --color-text-gray: #7D6B9E;
+    --color-text-dark: #1A2C22;
+    --color-text-gray: #5C7A63;
 }
 
 /* Dark mode overrides for custom theme tokens */
 .dark {
-    /* Brand Colors (Dark Mode) */
-    --color-primary: #A885FF;
-    --color-secondary: #C4ABFF;
-    --color-accent: #FFA6C2;
+    /* Brand Colors (Dark Mode) — Forest Growth */
+    --color-primary: #72C38A;
+    --color-secondary: #A5D8B2;
+    --color-accent: #E4B470;
     
     /* Backgrounds & Surfaces (Dark Mode) */
-    --color-background: #171122;
-    --color-card: #241B35;
-    --color-border: #3C3154;
+    --color-background: #0F1813;
+    --color-card: #18241D;
+    --color-border: #2D4236;
     
     /* Text Colors (Dark Mode) */
-    --color-text-dark: #F8F6FC;
-    --color-text-gray: #A294B8;
+    --color-text-dark: #EEF8F0;
+    --color-text-gray: #A5D8B2;
 }

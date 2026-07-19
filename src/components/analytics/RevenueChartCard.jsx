@@ -30,10 +30,10 @@ const RevenueChartCard = memo(({ data }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Revenue Analytics</h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">Monthly won deal revenue</p>
+            <h3 className="text-base font-bold text-text-dark">Revenue Analytics</h3>
+            <p className="text-sm text-text-gray mt-0.5">Monthly won deal revenue</p>
           </div>
-          <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
+          <div className="p-2 rounded-lg bg-primary/10 text-primary">
             <IndianRupee className="w-4 h-4" />
           </div>
         </div>
@@ -48,19 +48,19 @@ const RevenueChartCard = memo(({ data }) => {
             <AreaChart data={data} margin={{ top: 8, right: 8, left: -8, bottom: 0 }}>
               <defs>
                 <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#22C55E" stopOpacity={0.35} />
-                  <stop offset="95%" stopColor="#22C55E" stopOpacity={0.02} />
+                  <stop offset="5%" stopColor="#2F6A46" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#2F6A46" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#D4E3D5" vertical={false} />
               <XAxis
                 dataKey="month"
-                tick={{ fill: '#64748B', fontSize: 12 }}
+                tick={{ fill: '#5C7A63', fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: '#64748B', fontSize: 12 }}
+                tick={{ fill: '#5C7A63', fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) =>
@@ -71,7 +71,7 @@ const RevenueChartCard = memo(({ data }) => {
               <Area
                 type="monotone"
                 dataKey="revenue"
-                stroke="#22C55E"
+                stroke="#2F6A46"
                 strokeWidth={2.5}
                 fill="url(#revenueGradient)"
                 animationDuration={800}

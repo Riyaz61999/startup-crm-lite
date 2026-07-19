@@ -51,10 +51,10 @@ const PieChartCard = memo(({ data, totalLeads }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Lead Status Distribution</h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">Breakdown by pipeline stage</p>
+            <h3 className="text-base font-bold text-text-dark">Lead Status Distribution</h3>
+            <p className="text-sm text-text-gray mt-0.5">Breakdown by pipeline stage</p>
           </div>
-          <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+          <div className="p-2 rounded-lg bg-primary/10 text-primary">
             <PieChartIcon className="w-4 h-4" />
           </div>
         </div>
@@ -94,8 +94,8 @@ const PieChartCard = memo(({ data, totalLeads }) => {
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-3xl font-extrabold text-slate-900 dark:text-white">{totalLeads}</span>
-              <span className="text-xs font-medium text-slate-500 dark:text-gray-400">Total Leads</span>
+              <span className="text-3xl font-extrabold text-text-dark">{totalLeads}</span>
+              <span className="text-xs font-medium text-text-gray">Total Leads</span>
             </div>
           </div>
         )}
@@ -107,9 +107,9 @@ const PieChartCard = memo(({ data, totalLeads }) => {
                   className="w-2.5 h-2.5 rounded-full shrink-0"
                   style={{ backgroundColor: STATUS_COLORS_SHORT[item.name] || '#64748B' }}
                 />
-                <span className="text-slate-600 dark:text-gray-400 truncate">
+                <span className="text-text-gray truncate">
                   {item.name}{' '}
-                  <span className="font-semibold text-slate-900 dark:text-white">
+                  <span className="font-semibold text-text-dark">
                     {item.value} ({item.percentage}%)
                   </span>
                 </span>

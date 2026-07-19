@@ -20,9 +20,9 @@ import React from 'react';
 // Define list of CRM Pipeline Stages with their visual configurations
 const PIPELINE_STAGES = [
   { key: 'New', label: 'New', bgClass: 'bg-slate-450', textClass: 'text-slate-600', dotClass: 'bg-slate-400' },
-  { key: 'Contacted', label: 'Contacted', bgClass: 'bg-warning', textClass: 'text-warning', dotClass: 'bg-warning' },
-  { key: 'Meeting Scheduled', label: 'Meeting Scheduled', bgClass: 'bg-primary', textClass: 'text-primary', dotClass: 'bg-primary' },
-  { key: 'Proposal Sent', label: 'Proposal Sent', bgClass: 'bg-purple-500', textClass: 'text-purple-600', dotClass: 'bg-purple-500' },
+  { key: 'Contacted', label: 'Contacted', bgClass: 'bg-primary', textClass: 'text-primary', dotClass: 'bg-primary' },
+  { key: 'Meeting Scheduled', label: 'Meeting Scheduled', bgClass: 'bg-accent', textClass: 'text-accent', dotClass: 'bg-accent' },
+  { key: 'Proposal Sent', label: 'Proposal Sent', bgClass: 'bg-secondary', textClass: 'text-secondary', dotClass: 'bg-secondary' },
   { key: 'Won', label: 'Won', bgClass: 'bg-success', textClass: 'text-success', dotClass: 'bg-success' },
   { key: 'Lost', label: 'Lost', bgClass: 'bg-danger', textClass: 'text-danger', dotClass: 'bg-danger' }
 ];
@@ -60,19 +60,19 @@ const PipelineOverview = ({ leads = [] }) => {
   const hasData = totalLeads > 0;
 
   return (
-    <div className="bg-card dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-lg font-bold text-text-dark dark:text-white">Pipeline Overview</h3>
-          <p className="text-xs text-text-gray dark:text-gray-400 mt-0.5">Distribution of leads across sales stages</p>
+          <h3 className="text-lg font-bold text-text-dark">Pipeline Overview</h3>
+          <p className="text-xs text-text-gray mt-0.5">Distribution of leads across sales stages</p>
         </div>
-        <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-gray-300 rounded-full">
+        <span className="text-xs font-semibold px-2.5 py-1 bg-background text-text-gray rounded-full">
           Total: {totalLeads} Leads
         </span>
       </div>
 
       {/* Segmented Horizontal Bar */}
-      <div className="w-full h-4 bg-slate-100 dark:bg-gray-700 rounded-full overflow-hidden flex mb-6">
+      <div className="w-full h-4 bg-background rounded-full overflow-hidden flex mb-6">
         {hasData ? (
           stagesWithMetrics.map((stage) => {
             if (stage.count === 0) return null;
@@ -84,37 +84,37 @@ const PipelineOverview = ({ leads = [] }) => {
                 title={`${stage.label}: ${stage.count} (${stage.percentage.toFixed(0)}%)`}
               >
                 {/* Micro tooltip on segment hover */}
-                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 bg-slate-800 dark:bg-gray-700 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-10 shadow-xs">
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 bg-[#0F1813] text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-10 shadow-xs">
                   {stage.label}: {stage.count}
                 </span>
               </div>
             );
           })
         ) : (
-          <div className="w-full h-full bg-slate-100 dark:bg-gray-700 flex items-center justify-center text-slate-400 dark:text-gray-500 text-xs font-medium">
+          <div className="w-full h-full bg-background flex items-center justify-center text-text-gray text-xs font-medium">
             No pipeline leads recorded
           </div>
         )}
       </div>
 
       {/* Grid Legend List */}
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 border-t border-slate-100 dark:border-gray-700 pt-5">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 border-t border-border pt-5">
         {stagesWithMetrics.map((stage) => (
           <div 
             key={stage.key} 
-            className="flex flex-col items-center sm:items-start text-center sm:text-left p-2 rounded-xl hover:bg-slate-50/80 dark:hover:bg-gray-700/50 transition-colors duration-200"
+            className="flex flex-col items-center sm:items-start text-center sm:text-left p-2 rounded-xl hover:bg-primary/5 transition-colors duration-200"
           >
             <div className="flex items-center gap-1.5 mb-1">
               <span className={`w-2.5 h-2.5 rounded-full ${stage.dotClass}`} aria-hidden="true" />
-              <span className="text-xs font-semibold text-text-dark dark:text-white truncate max-w-[80px]" title={stage.label}>
+              <span className="text-xs font-semibold text-text-dark truncate max-w-[80px]" title={stage.label}>
                 {stage.label}
               </span>
             </div>
             <div className="flex items-baseline gap-1 mt-0.5">
-              <span className="text-sm font-bold text-text-dark dark:text-white">
+              <span className="text-sm font-bold text-text-dark">
                 {stage.count}
               </span>
-              <span className="text-[10px] text-text-gray dark:text-gray-400 font-medium">
+              <span className="text-[10px] text-text-gray font-medium">
                 ({stage.percentage.toFixed(0)}%)
               </span>
             </div>

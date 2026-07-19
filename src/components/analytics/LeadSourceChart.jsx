@@ -32,10 +32,10 @@ const LeadSourceChart = memo(({ data }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Lead Source Analytics</h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">Top acquisition channels</p>
+            <h3 className="text-base font-bold text-text-dark">Lead Source Analytics</h3>
+            <p className="text-sm text-text-gray mt-0.5">Top acquisition channels</p>
           </div>
-          <div className="p-2 rounded-lg bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400">
+          <div className="p-2 rounded-lg bg-secondary/10 text-secondary">
             <Share2 className="w-4 h-4" />
           </div>
         </div>
@@ -52,17 +52,17 @@ const LeadSourceChart = memo(({ data }) => {
               layout="vertical"
               margin={{ top: 0, right: 16, left: 8, bottom: 0 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" horizontal={false} />
-              <XAxis type="number" tick={{ fill: '#64748B', fontSize: 12 }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#D4E3D5" horizontal={false} />
+              <XAxis type="number" tick={{ fill: '#5C7A63', fontSize: 12 }} axisLine={false} tickLine={false} />
               <YAxis
                 type="category"
                 dataKey="source"
                 width={90}
-                tick={{ fill: '#64748B', fontSize: 12 }}
+                tick={{ fill: '#5C7A63', fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(37, 99, 235, 0.06)' }} />
+              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(47, 106, 70, 0.06)' }} />
               <Bar dataKey="count" radius={[0, 6, 6, 0]} animationDuration={800} maxBarSize={24}>
                 {data.map((entry, index) => (
                   <Cell

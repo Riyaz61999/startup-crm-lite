@@ -5,11 +5,11 @@ import { Card, CardHeader, CardContent } from '../common/Card';
 const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const getIntensityClass = (total) => {
-  if (total === 0) return 'bg-slate-100 dark:bg-gray-700';
-  if (total <= 1) return 'bg-emerald-200';
-  if (total <= 3) return 'bg-emerald-400';
-  if (total <= 5) return 'bg-emerald-500';
-  return 'bg-emerald-700';
+  if (total === 0) return 'bg-background';
+  if (total <= 1) return 'bg-emerald-250/30 dark:bg-emerald-900/20';
+  if (total <= 3) return 'bg-emerald-300/60 dark:bg-emerald-800/40';
+  if (total <= 5) return 'bg-emerald-500/80 dark:bg-emerald-700/60';
+  return 'bg-primary';
 };
 
 const HeatmapCell = memo(({ cell, onHover, onLeave }) => {
@@ -20,7 +20,7 @@ const HeatmapCell = memo(({ cell, onHover, onLeave }) => {
   return (
     <button
       type="button"
-      className={`w-full aspect-square rounded-sm ${getIntensityClass(cell.total)} hover:ring-2 hover:ring-blue-400 transition-all cursor-pointer`}
+      className={`w-full aspect-square rounded-sm ${getIntensityClass(cell.total)} hover:ring-2 hover:ring-primary transition-all cursor-pointer`}
       onMouseEnter={() => onHover(cell)}
       onFocus={() => onHover(cell)}
       onMouseLeave={onLeave}
@@ -44,10 +44,10 @@ const ActivityHeatmap = memo(({ data }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Activity Heatmap</h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">{monthLabel} — leads, meetings & calls</p>
+            <h3 className="text-base font-bold text-text-dark">Activity Heatmap</h3>
+            <p className="text-sm text-text-gray mt-0.5">{monthLabel} — leads, meetings & calls</p>
           </div>
-          <div className="p-2 rounded-lg bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+          <div className="p-2 rounded-lg bg-primary/10 text-primary">
             <Activity className="w-4 h-4" />
           </div>
         </div>
@@ -58,7 +58,7 @@ const ActivityHeatmap = memo(({ data }) => {
             <div className="grid grid-cols-8 gap-1 mb-1">
               <div />
               {DAY_LABELS.map((day) => (
-                <div key={day} className="text-[10px] font-medium text-slate-400 dark:text-gray-500 text-center">
+                <div key={day} className="text-[10px] font-medium text-text-gray text-center">
                   {day}
                 </div>
               ))}
@@ -66,7 +66,7 @@ const ActivityHeatmap = memo(({ data }) => {
 
             {weeks.map((week, wi) => (
               <div key={wi} className="grid grid-cols-8 gap-1 mb-1">
-                <div className="text-[10px] font-medium text-slate-400 dark:text-gray-500 flex items-center">
+                <div className="text-[10px] font-medium text-text-gray flex items-center">
                   W{wi + 1}
                 </div>
                 {week.map((cell, di) => (
@@ -83,7 +83,7 @@ const ActivityHeatmap = memo(({ data }) => {
         </div>
 
         {tooltip && (
-          <div className="mt-4 rounded-xl bg-slate-900 dark:bg-gray-700 text-white text-xs px-4 py-3 inline-block">
+          <div className="mt-4 rounded-xl bg-card border border-border text-text-dark text-xs px-4 py-3 inline-block shadow-sm">
             <p className="font-semibold mb-1">{tooltip.date}</p>
             <p>{tooltip.leads} Leads Created</p>
             <p>{tooltip.meetings} Meetings Scheduled</p>
@@ -91,9 +91,9 @@ const ActivityHeatmap = memo(({ data }) => {
           </div>
         )}
 
-        <div className="flex items-center gap-2 mt-4 text-[10px] text-slate-500 dark:text-gray-400">
+        <div className="flex items-center gap-2 mt-4 text-[10px] text-text-gray">
           <span>Less</span>
-          {['bg-slate-100 dark:bg-gray-700', 'bg-emerald-200', 'bg-emerald-400', 'bg-emerald-500', 'bg-emerald-700'].map(
+          {['bg-background', 'bg-emerald-200/50', 'bg-emerald-350/70', 'bg-emerald-500/80', 'bg-primary'].map(
             (cls) => (
               <span key={cls} className={`w-3 h-3 rounded-sm ${cls}`} />
             )

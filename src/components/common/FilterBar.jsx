@@ -39,8 +39,8 @@ const FilterBar = ({ activeFilter, onFilterChange, leads = [] }) => {
             aria-pressed={isActive}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer ${
               isActive
-                ? 'bg-primary text-white border-primary shadow-sm dark:bg-blue-600 dark:border-blue-600'
-                : 'bg-slate-50 dark:bg-gray-700 text-text-gray dark:text-gray-300 border-slate-200 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-600 hover:border-slate-300 dark:hover:border-gray-500 hover:text-text-dark dark:hover:text-white'
+                ? 'bg-primary text-white border-primary shadow-sm'
+                : 'bg-background dark:bg-card text-text-gray border-border hover:bg-card dark:hover:bg-border hover:border-primary/30 hover:text-text-dark'
             }`}
           >
             {filter} ({count})

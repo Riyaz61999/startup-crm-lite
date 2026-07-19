@@ -103,22 +103,22 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 bg-background dark:bg-gray-900 min-h-screen transition-colors duration-200">
+    <div className="p-4 md:p-6 lg:p-8 bg-background min-h-screen transition-colors duration-200">
       {/* Header Container */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-text-dark dark:text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-text-dark tracking-tight">
             Dashboard Overview
           </h1>
-          <p className="text-sm text-text-gray dark:text-gray-400 mt-1 font-medium">
+          <p className="text-sm text-text-gray mt-1 font-medium">
             Welcome back! Here's a review of your startup's pipeline activity.
           </p>
         </div>
         
         {/* Date Stamp Tag */}
-        <div className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 border border-slate-100 dark:border-gray-700 rounded-xl shadow-xs self-start md:self-auto transition-colors duration-200">
-          <Calendar className="w-4 h-4 text-text-gray dark:text-gray-400" aria-hidden="true" />
-          <span className="text-xs font-semibold text-text-dark dark:text-gray-200">
+        <div className="flex items-center gap-2 px-4 py-2.5 bg-card border border-border rounded-xl shadow-xs self-start md:self-auto transition-colors duration-200">
+          <Calendar className="w-4 h-4 text-text-gray" aria-hidden="true" />
+          <span className="text-xs font-semibold text-text-dark">
             {formattedDate}
           </span>
         </div>
