@@ -30,14 +30,18 @@ const AuthPage = () => {
     
     try {
       if (isLogin) {
-        await login(formData.email, formData.password);
-        toast.success('Successfully logged in!');
+        const result = await login(formData.email, formData.password);
+        if (result && result.success) {
+          toast.success('Successfully logged in!');
+          navigate(from, { replace: true });
+        }
       } else {
-        await register(formData);
-        toast.success('Registration successful! Please log in.');
-        setIsLogin(true); // Switch to login view after successful registration
+        const result = await register(formData);
+        if (result && result.success) {
+          toast.success('Registration successful! Please log in.');
+          setIsLogin(true); // Switch to login view after successful registration
+        }
       }
-      if (isLogin) navigate(from, { replace: true });
     } catch (error) {
       toast.error(error.message || 'Authentication failed. Please try again.');
     } finally {

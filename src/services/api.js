@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+  baseURL: import.meta.env.VITE_API_URL || 'https://startup-crm-lite-xufd.onrender.com',
 });
 
 // Request interceptor that automatically adds the Authorization header
