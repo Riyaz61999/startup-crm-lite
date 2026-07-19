@@ -30,7 +30,7 @@ const AuthPage = () => {
     
     try {
       if (isLogin) {
-        await login({ email: formData.email, password: formData.password });
+        await login(formData.email, formData.password);
         toast.success('Successfully logged in!');
       } else {
         await register(formData);
