@@ -1,325 +1,358 @@
 import React, { useState, useEffect } from 'react';
-import { X, User, Building2, Mail, Phone, DollarSign, Share2 } from 'lucide-react';
-
-const INITIAL_STATE = {
-  name: '',
-  company: '',
-  email: '',
-  phone: '',
-  status: 'New',
-  value: '',
-  source: 'Website',
-};
-
-const STATUS_OPTIONS = ['New', 'Contacted', 'Meeting Scheduled', 'Proposal Sent', 'Won', 'Lost'];
-const SOURCE_OPTIONS = ['Website', 'Referral', 'LinkedIn', 'Cold Call', 'Cold Email', 'Email Campaign', 'Other', 'Instagram', 'Ads'];
 
 /**
- * LeadForm renders a modal overlay with a comprehensive form for creating or 
- * editing a CRM lead. Includes accessible keyboard handling and smooth animations.
- *
- * @param {Object} props - Component props.
- * @param {boolean} props.isOpen - Controls visibility of the modal.
- * @param {function} props.onClose - Callback to close the modal.
- * @param {function} props.onSubmit - Callback when form is successfully submitted.
- * @param {Object} [props.editingLead] - Lead data to populate form (if editing).
+ * Shape of the Lead object data.
+ * @typedef {Object} LeadInput
+ * @property {string} name - The lead's primary contact name.
+ * @property {string} company - The lead's company or organization.
+ * @property {string} email - The lead's primary email address.
+ * @property {string} [phone] - The lead's contact phone number.
+ * @property {string} status - Current pipeline status stage.
+ * @property {string} source - How the lead was acquired.
  */
-const LeadForm = ({ isOpen, onClose, onSubmit, editingLead = null }) => {
-  const [formData, setFormData] = useState(INITIAL_STATE);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
 
-  // Handle mounting/unmounting animation states
+/**
+ * Props for the LeadForm component.
+ * @typedef {Object} LeadFormProps
+ * @property {LeadInput} [initialData] - Optional prefilled lead data (used in EDIT mode).
+ * @property {function} onSubmit - Callback function triggered with form data on valid submit.
+ * @property {function} onCancel - Callback function triggered to close the form/modal.
+ */
+
+const STATUS_OPTIONS = ['New', 'Contacted', 'Meeting Scheduled', 'Proposal Sent', 'Won', 'Lost'];
+const SOURCE_OPTIONS = ['Website', 'Referral', 'LinkedIn', 'Cold Call', 'Email Campaign', 'Other'];
+
+/**
+ * LeadForm component handles the input fields and validation checks for 
+ * creating new leads or updating existing ones.
+ *
+ * @param {LeadFormProps} props - The component props.
+ * @returns {React.JSX.Element} The rendered lead form.
+ */
+const LeadForm = ({ initialData, onSubmit, onCancel }) => {
+  const isEditMode = !!initialData;
+
+  // Initialize form state
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    status: 'New',
+    source: 'Website',
+    value: 0
+  });
+
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  // Sync form state when initialData changes (e.g. switching between edit targets)
   useEffect(() => {
-    if (isOpen) setShouldRender(true);
-  }, [isOpen]);
-
-  const onAnimationEnd = () => {
-    if (!isOpen) setShouldRender(false);
-  };
-
-  // Populate form if an existing lead is passed in for editing
-  useEffect(() => {
-    if (editingLead) {
+    if (initialData) {
       setFormData({
-        ...INITIAL_STATE,
-        ...editingLead,
-        value: editingLead.value?.toString() || '',
+        name: initialData.name || '',
+        company: initialData.company || '',
+        email: initialData.email || '',
+        phone: initialData.phone || '',
+        status: initialData.status || 'New',
+        source: initialData.source || 'Website',
+        value: initialData.value || 0
       });
     } else {
-      setFormData(INITIAL_STATE);
+      setFormData({
+        name: '',
+        company: '',
+        email: '',
+        phone: '',
+        status: 'New',
+        source: 'Website',
+        value: 0
+      });
     }
-  }, [editingLead, isOpen]);
+    setErrors({});
+    setTouched({});
+  }, [initialData]);
 
-  // Trap focus and handle escape key for accessibility
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && isOpen) onClose();
-    };
-
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      document.addEventListener('keydown', handleEscape);
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, [isOpen, onClose]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const processedData = {
-        ...formData,
-        value: formData.value === '' ? 0 : Number(formData.value)
-      };
-      await onSubmit(processedData);
-      if (!editingLead) setFormData(INITIAL_STATE);
-    } finally {
-      setIsSubmitting(false);
+  /**
+   * Validates individual fields.
+   * @param {string} name - Field name.
+   * @param {string} value - Field value.
+   * @returns {string} Error message, if any.
+   */
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) return 'Contact name is required.';
+        return '';
+      case 'company':
+        if (!value.trim()) return 'Company name is required.';
+        return '';
+      case 'email':
+        if (!value.trim()) return 'Email address is required.';
+        // Basic email regex validator
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value.trim())) return 'Please enter a valid email address.';
+        return '';
+      default:
+        return '';
     }
   };
 
-  if (!shouldRender) return null;
+  /**
+   * Handles input value changes.
+   */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Run validation on-the-fly for touched fields
+    if (touched[name]) {
+      const fieldError = validateField(name, value);
+      setErrors((prev) => ({ ...prev, [name]: fieldError }));
+    }
+  };
+
+  /**
+   * Handles focus blur to mark inputs as touched.
+   */
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const fieldError = validateField(name, value);
+    setErrors((prev) => ({ ...prev, [name]: fieldError }));
+  };
+
+  /**
+   * Submits and validates the entire form.
+   */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validate all required fields
+    const newErrors = {
+      name: validateField('name', formData.name),
+      company: validateField('company', formData.company),
+      email: validateField('email', formData.email)
+    };
+
+    setErrors(newErrors);
+    setTouched({
+      name: true,
+      company: true,
+      email: true
+    });
+
+    // If there are no validation error messages, submit the form data
+    const hasErrors = Object.values(newErrors).some((err) => err !== '');
+    if (!hasErrors) {
+      onSubmit(formData);
+    }
+  };
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
-      onAnimationEnd={onAnimationEnd}
-    >
-      {/* Dimmed Backdrop */}
-      <div 
-        className={`fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'opacity-0'
-        }`}
-        onClick={onClose}
-        aria-hidden="true"
-      />
+    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      <div>
+        <h2 className="text-xl font-bold text-text-dark mb-1">
+          {isEditMode ? 'Edit Lead Details' : 'Add New Prospect'}
+        </h2>
+        <p className="text-xs text-text-gray mb-4">
+          {isEditMode ? 'Modify properties of the selected contact.' : 'Enter information to register a new CRM lead.'}
+        </p>
+      </div>
 
-      {/* Modal Dialog Container */}
-      <div 
-        className={`relative w-full max-w-2xl bg-card rounded-2xl shadow-xl border border-border flex flex-col max-h-[90vh] transition-all duration-300 transform ${
-          isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
-        }`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-      >
-        {/* Sticky Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border bg-card rounded-t-2xl sticky top-0 z-10 shrink-0">
-          <div>
-            <h2 id="modal-title" className="text-xl font-bold text-text-dark">
-              {editingLead ? 'Edit Lead' : 'Add New Lead'}
-            </h2>
-            <p className="text-sm text-text-gray mt-1">
-              {editingLead ? 'Update the details for this contact.' : 'Enter the details of your new prospect.'}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-2 -mr-2 text-text-gray hover:text-text-dark hover:bg-background rounded-full transition-colors duration-200 cursor-pointer"
-            aria-label="Close modal"
-          >
-            <X className="w-5 h-5" />
-          </button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Name Input */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="name" className="text-xs font-bold text-text-dark uppercase tracking-wider flex items-center">
+            Contact Name <span className="text-danger ml-0.5" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="e.g. John Doe"
+            className={`w-full px-3.5 py-2.5 bg-background border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:bg-card transition-all duration-200 ${
+              errors.name 
+                ? 'border-danger focus:border-danger focus:ring-danger/20' 
+                : 'border-border focus:border-primary focus:ring-primary/20'
+            }`}
+            aria-required="true"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? 'name-error' : undefined}
+          />
+          {errors.name && (
+            <span id="name-error" className="text-xs font-semibold text-danger">
+              {errors.name}
+            </span>
+          )}
         </div>
 
-        {/* Scrollable Form Body */}
-        <form id="lead-form" onSubmit={handleSubmit} className="p-6 overflow-y-auto flex-1 space-y-6">
-          {/* Section: Contact Information */}
-          <div>
-            <h3 className="text-sm font-bold text-text-dark mb-4 pb-2 border-b border-border flex items-center gap-2">
-              <User className="w-4 h-4 text-primary" />
-              Contact Information
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-text-dark mb-1.5">
-                  Full Name <span className="text-danger">*</span>
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="w-4 h-4 text-text-gray/70" />
-                  </div>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="e.g. Jane Doe"
-                  />
-                </div>
-              </div>
+        {/* Company Input */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="company" className="text-xs font-bold text-text-dark uppercase tracking-wider flex items-center">
+            Company <span className="text-danger ml-0.5" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={formData.company}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="e.g. Stripe Inc."
+            className={`w-full px-3.5 py-2.5 bg-background border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:bg-card transition-all duration-200 ${
+              errors.company 
+                ? 'border-danger focus:border-danger focus:ring-danger/20' 
+                : 'border-border focus:border-primary focus:ring-primary/20'
+            }`}
+            aria-required="true"
+            aria-invalid={!!errors.company}
+            aria-describedby={errors.company ? 'company-error' : undefined}
+          />
+          {errors.company && (
+            <span id="company-error" className="text-xs font-semibold text-danger">
+              {errors.company}
+            </span>
+          )}
+        </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-text-dark mb-1.5">
-                  Email Address <span className="text-danger">*</span>
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="w-4 h-4 text-text-gray/70" />
-                  </div>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="e.g. jane@company.com"
-                  />
-                </div>
-              </div>
+        {/* Email Input */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="email" className="text-xs font-bold text-text-dark uppercase tracking-wider flex items-center">
+            Email Address <span className="text-danger ml-0.5" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="e.g. contact@stripe.com"
+            className={`w-full px-3.5 py-2.5 bg-background border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:bg-card transition-all duration-200 ${
+              errors.email 
+                ? 'border-danger focus:border-danger focus:ring-danger/20' 
+                : 'border-border focus:border-primary focus:ring-primary/20'
+            }`}
+            aria-required="true"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? 'email-error' : undefined}
+          />
+          {errors.email && (
+            <span id="email-error" className="text-xs font-semibold text-danger">
+              {errors.email}
+            </span>
+          )}
+        </div>
 
-              <div>
-                <label htmlFor="phone" className="block text-sm font-semibold text-text-dark mb-1.5">
-                  Phone Number
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Phone className="w-4 h-4 text-text-gray/70" />
-                  </div>
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="e.g. +1 (555) 000-0000"
-                  />
-                </div>
-              </div>
+        {/* Phone Input */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="phone" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="e.g. +1 (555) 123-4567"
+            className="w-full px-3.5 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:bg-card focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+          />
+        </div>
+
+        {/* Status Dropdown */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="status" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+            Status Stage
+          </label>
+          <div className="relative">
+            <select
+              id="status"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="w-full px-3.5 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:bg-card focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 appearance-none cursor-pointer"
+            >
+              {STATUS_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-gray">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
             </div>
           </div>
+        </div>
 
-          {/* Section: Company & Deal Details */}
-          <div>
-            <h3 className="text-sm font-bold text-text-dark mb-4 pb-2 border-b border-border flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-primary" />
-              Company & Deal Details
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="company" className="block text-sm font-semibold text-text-dark mb-1.5">
-                  Company Name <span className="text-danger">*</span>
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Building2 className="w-4 h-4 text-text-gray/70" />
-                  </div>
-                  <input
-                    type="text"
-                    id="company"
-                    required
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="e.g. Acme Corp"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="value" className="block text-sm font-semibold text-text-dark mb-1.5">
-                  Deal Value ($)
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <DollarSign className="w-4 h-4 text-text-gray/70" />
-                  </div>
-                  <input
-                    type="number"
-                    id="value"
-                    min="0"
-                    step="0.01"
-                    value={formData.value}
-                    onChange={(e) => setFormData({ ...formData, value: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-                    placeholder="e.g. 5000"
-                  />
-                </div>
-              </div>
+        {/* Source Dropdown */}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="source" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+            Lead Source
+          </label>
+          <div className="relative">
+            <select
+              id="source"
+              name="source"
+              value={formData.source}
+              onChange={handleChange}
+              className="w-full px-3.5 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:bg-card focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 appearance-none cursor-pointer"
+            >
+              {SOURCE_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-gray">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
             </div>
           </div>
+        </div>
 
-          {/* Section: Pipeline Status */}
-          <div>
-            <h3 className="text-sm font-bold text-text-dark mb-4 pb-2 border-b border-border flex items-center gap-2">
-              <Share2 className="w-4 h-4 text-primary" />
-              Pipeline Context
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="status" className="block text-sm font-semibold text-text-dark mb-1.5">
-                  Pipeline Stage
-                </label>
-                <select
-                  id="status"
-                  value={formData.status}
-                  onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer appearance-none"
-                >
-                  {STATUS_OPTIONS.map((status) => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="source" className="block text-sm font-semibold text-text-dark mb-1.5">
-                  Lead Source
-                </label>
-                <select
-                  id="source"
-                  value={formData.source}
-                  onChange={(e) => setFormData({ ...formData, source: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer appearance-none"
-                >
-                  {SOURCE_OPTIONS.map((source) => (
-                    <option key={source} value={source}>{source}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        {/* Sticky Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-border bg-card rounded-b-2xl shrink-0">
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={isSubmitting}
-            className="px-5 py-2.5 text-sm font-semibold text-text-dark bg-background border border-border hover:bg-border rounded-xl transition-colors disabled:opacity-50 cursor-pointer"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            form="lead-form"
-            disabled={isSubmitting}
-            className="px-5 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5 rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 disabled:hover:translate-y-0 cursor-pointer"
-          >
-            {isSubmitting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Saving...
-              </>
-            ) : (
-              editingLead ? 'Save Changes' : 'Add Lead'
-            )}
-          </button>
+        {/* Deal Value Input */}
+        <div className="flex flex-col gap-1.5 md:col-span-2">
+          <label htmlFor="value" className="text-xs font-bold text-text-dark uppercase tracking-wider">
+            Deal Size (Est. Value USD)
+          </label>
+          <input
+            type="number"
+            id="value"
+            name="value"
+            value={formData.value}
+            onChange={handleChange}
+            placeholder="e.g. 5000"
+            min="0"
+            className="w-full px-3.5 py-2.5 bg-background border border-border rounded-xl text-sm font-medium text-text-dark focus:outline-none focus:bg-card focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+          />
         </div>
       </div>
-    </div>
+
+      {/* Button controls container */}
+      <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2.5 text-sm font-bold text-text-gray hover:bg-border border border-border rounded-xl transition-all duration-200 cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-5 py-2.5 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
+        >
+          {isEditMode ? 'Save Changes' : 'Create Lead'}
+        </button>
+      </div>
+    </form>
   );
 };
 
